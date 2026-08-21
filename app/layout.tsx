@@ -4,14 +4,27 @@ import { jsonLd, marca, local } from "@/lib/site-data";
 
 /**
  * URL base pra montar links absolutos (og:image, canonical etc).
- * Em produção na Vercel, a variável VERCEL_URL já vem pronta sozinha —
- * não precisa editar nada aqui. Só troque NEXT_PUBLIC_SITE_URL se o site
- * for publicado num domínio próprio (ex.: cafeebeleza.com.br) e você
- * quiser fixar esse endereço nas configurações de ambiente da Vercel.
+ * Essa página é gerada de forma estática (o Next imprime o HTML uma vez,
+ * no build), então esse endereço é calculado durante o build na Vercel —
+ * não a cada visita. VERCEL_URL muda a cada deploy (aponta pro endereço
+ * daquele deploy específico, não pro domínio final), por isso a ordem de
+ * preferência abaixo usa primeiro o domínio de produção estável.
+ *
+ * Se a prévia do link não aparecer no WhatsApp/Instagram, o mais provável
+ * é essa variável não estar apontando pro domínio certo. O jeito garantido
+ * de resolver: em vercel.com → seu projeto → Settings → Environment
+ * Variables, adicione NEXT_PUBLIC_SITE_URL com o valor
+ * "https://SEU-DOMINIO.vercel.app" (ou seu domínio próprio, se tiver um),
+ * marque para Production, e refaça o deploy (Redeploy). Sem redeploy essa
+ * variável não entra no HTML já gerado.
  */
 const urlBase =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
 
 export const metadata: Metadata = {
   metadataBase: new URL(urlBase),

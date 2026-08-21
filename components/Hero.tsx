@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import CoffeeLineArt from "./CoffeeLineArt";
 import { hero, contato } from "@/lib/site-data";
 
 export default function Hero() {
   const ref = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -28,24 +28,57 @@ export default function Hero() {
     return () => window.clearTimeout(seguranca);
   }, []);
 
+  useEffect(() => {
+    // quem pediu movimento reduzido no sistema não recebe o vídeo em
+    // autoplay: fica só no quadro do poster, parado.
+    const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduz && videoRef.current) {
+      videoRef.current.play().catch(() => {
+        /* alguns navegadores bloqueiam autoplay; o poster continua visível */
+      });
+    }
+  }, []);
+
   return (
     <section
       id="inicio"
       ref={ref}
       className="relative flex min-h-[100svh] items-center overflow-hidden pt-24"
     >
-      {/* textura de fundo sutil */}
+      {/* video de fundo: o preparo do cafe, em loop */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        src="/videos/hero.mp4"
+        poster="/videos/hero-poster.jpg"
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      />
+
+      {/* veu escuro sobre o video: garante leitura do texto e mantem a
+          paleta vinho/dourado por cima da filmagem */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(60% 55% at 78% 22%, rgba(215,166,62,.16), transparent 60%), radial-gradient(50% 45% at 12% 85%, rgba(215,166,62,.10), transparent 60%)",
+            "linear-gradient(100deg, rgba(58,22,32,.94) 8%, rgba(58,22,32,.82) 32%, rgba(58,22,32,.52) 58%, rgba(58,22,32,.32) 100%), linear-gradient(to top, rgba(58,22,32,.9), rgba(58,22,32,0) 38%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(60% 55% at 82% 18%, rgba(215,166,62,.14), transparent 60%)",
         }}
       />
 
-      <div className="relative mx-auto grid max-w-conteudo grid-cols-1 items-center gap-12 px-5 py-16 md:grid-cols-[1.15fr_0.85fr] md:px-8">
-        <div>
+      <div className="relative mx-auto w-full max-w-conteudo px-5 py-16 md:px-8">
+        <div className="max-w-xl">
           <p
             className="entra font-body text-xs uppercase tracking-[0.22em] text-dourado-claro"
             style={{ ["--d" as any]: "60ms" }}
@@ -93,34 +126,15 @@ export default function Hero() {
             </a>
           </div>
         </div>
+      </div>
 
-        <div
-          className="entra relative mx-auto w-full max-w-sm"
-          style={{ ["--d" as any]: "180ms" }}
-        >
-          <div
-            aria-hidden="true"
-            className="absolute -inset-x-4 -inset-y-6 -z-10 rounded-macia border border-dourado/20 md:-inset-x-6 md:-inset-y-8"
-          />
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-macia border border-dourado/20 shadow-[0_30px_60px_-30px_rgba(0,0,0,.7)]">
-            <Image
-              src="/images/hero.jpg"
-              alt="Fatia de bolo red velvet com morangos, servida no Café e Beleza"
-              fill
-              priority
-              sizes="(min-width: 768px) 34vw, 80vw"
-              className="object-cover"
-            />
-          </div>
-
-          {/* selo animado: o cafe desenhado em linha, em loop, sobre o fundo escuro */}
-          <div
-            aria-hidden="true"
-            className="absolute -bottom-8 -left-8 flex h-32 w-32 items-center justify-center rounded-full border border-dourado/25 bg-marrom-escuro shadow-[0_18px_36px_-16px_rgba(0,0,0,.75)] md:h-36 md:w-36"
-          >
-            <CoffeeLineArt className="h-[72%] w-[72%]" />
-          </div>
-        </div>
+      {/* selo animado: o cafe desenhado em linha, em loop, sobre o video */}
+      <div
+        aria-hidden="true"
+        className="entra absolute bottom-8 right-5 flex h-28 w-28 items-center justify-center rounded-full border border-dourado/30 bg-marrom-escuro/90 shadow-[0_18px_36px_-16px_rgba(0,0,0,.75)] backdrop-blur-sm md:bottom-10 md:right-10 md:h-36 md:w-36"
+        style={{ ["--d" as any]: "260ms" }}
+      >
+        <CoffeeLineArt className="h-[72%] w-[72%]" />
       </div>
 
       <a

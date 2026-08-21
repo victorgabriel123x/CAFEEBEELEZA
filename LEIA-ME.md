@@ -30,28 +30,34 @@ Next.js): conecta a pasta do projeto (ou um repositório Git) e ela cuida do
 resto, gratuitamente para esse tamanho de site. Outras opções: Netlify, ou
 qualquer serviço que rode Node.js.
 
-## Prévia ao colar o link (WhatsApp, Instagram etc.)
+## Prévia ao colar o link (WhatsApp, Instagram etc.) — PASSO OBRIGATÓRIO
 
-Já vem pronta: existe uma imagem de compartilhamento em
-`public/logo/og.jpg` (1200×630, com o nome, "Bela Vista · Tucuruí, PA" e a
-frase de efeito) e o site já anuncia ela pro WhatsApp/Instagram/Facebook via
-`openGraph` em `app/layout.tsx`. Não precisa fazer nada extra.
+A imagem de compartilhamento já existe, pronta, em `public/logo/og.jpg`
+(1200×630). O que faltava — e é bem provável que tenha sido o motivo de não
+ter funcionado — é dizer pro site qual é o próprio endereço, porque essa
+página é gerada de forma estática (o HTML é montado uma vez, durante o
+deploy) e sem essa informação ela monta um link quebrado.
 
-O único detalhe: o endereço usado nessa prévia (`og:image`, `og:url`) é
-calculado sozinho a partir do domínio da Vercel (variável `VERCEL_URL`, que a
-Vercel já define automaticamente a cada deploy) — então funciona assim que
-você subir, sem precisar editar nada. Se um dia colocar um domínio próprio
-(tipo `cafeebeleza.com.br`), só defina a variável de ambiente
-`NEXT_PUBLIC_SITE_URL` nas configurações do projeto na Vercel, com esse
-endereço.
+**Resolva assim, direto no painel da Vercel:**
 
-Depois de publicar, para ver a prévia atualizar no WhatsApp (ele guarda em
-cache), use o [debugger do Facebook](https://developers.facebook.com/tools/debug/)
-colando o link e clicando em "Buscar novamente" — é o mesmo cache que o
-WhatsApp usa.
+1. Abra o projeto em vercel.com → **Settings** → **Environment Variables**
+2. Adicione uma variável:
+   - Nome: `NEXT_PUBLIC_SITE_URL`
+   - Valor: o endereço do seu site, sem barra no final — por exemplo
+     `https://cafe-e-beleza.vercel.app` (ou seu domínio próprio, se tiver um)
+   - Marque pelo menos o ambiente **Production**
+3. Vá em **Deployments**, abra o menu (⋯) do último deploy e clique em
+   **Redeploy**. Só definir a variável não é suficiente — o HTML precisa ser
+   regerado.
+
+Depois do redeploy, teste no [debugger do Facebook](https://developers.facebook.com/tools/debug/):
+cole o link do site e clique em **"Buscar novamente"** (ou **"Scrape Again"**).
+Esse botão força buscar a versão nova — sem ele, o WhatsApp pode continuar
+mostrando a prévia antiga (ou nenhuma) por causa do cache dele, mesmo com o
+site já corrigido.
 
 Quer trocar a imagem de prévia? Gere uma nova de 1200×630 e salve por cima de
-`public/logo/og.jpg`.
+`public/logo/og.jpg`, depois publique de novo e repita o passo do debugger.
 
 ## Como trocar textos, telefone, endereço e horário
 
