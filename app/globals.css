@@ -1,0 +1,287 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: "Work Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --suave: cubic-bezier(0.2, 0.72, 0.28, 1);
+  --marrom-escuro: #24150f;
+  --marrom-chocolate: #332119;
+  --dourado: #d7a63e;
+  --dourado-claro: #efc76c;
+  --bege-claro: #e8d7be;
+  --branco-quente: #f7f1e8;
+  --cinza-bege: #cbbeae;
+  --borda-dourada: rgba(215, 166, 62, 0.18);
+  --altura-cabecalho: 84px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--marrom-escuro);
+  color: var(--bege-claro);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--altura-cabecalho) + 0.75rem);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--branco-quente);
+  line-height: 1.12;
+}
+
+::selection {
+  background: var(--dourado);
+  color: var(--marrom-escuro);
+}
+
+.pular-conteudo {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--dourado-claro);
+  color: var(--marrom-escuro);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 10px 0;
+  z-index: 100;
+  font-weight: 600;
+}
+.pular-conteudo:focus {
+  left: 0;
+}
+
+/* ---------- travas de animação ---------- */
+
+.entra {
+  transition: opacity 1s var(--suave) var(--d, 0ms),
+    transform 1s var(--suave) var(--d, 0ms);
+}
+.js .entra {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.secao-pronta .entra {
+  opacity: 1;
+  transform: none;
+}
+
+.pal {
+  display: inline-block;
+  transition: opacity 0.95s var(--suave) var(--d, 0ms),
+    transform 0.95s var(--suave) var(--d, 0ms);
+}
+.js .pal {
+  opacity: 0;
+  transform: translateY(0.42em);
+}
+.secao-pronta .pal {
+  opacity: 1;
+  transform: none;
+}
+
+.revela {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.9s var(--suave), transform 0.9s var(--suave);
+}
+.revela.dentro {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .revela {
+    opacity: 1;
+    transform: none;
+  }
+  .js .entra,
+  .js .pal {
+    opacity: 1;
+    transform: none;
+  }
+  .traco-linha {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ---------- traço do café animado no loop (hero) ---------- */
+
+.traco-linha {
+  fill: none;
+  stroke: var(--dourado);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  animation: tracoLoop 8s var(--suave) infinite;
+}
+.traco-vapor {
+  stroke: var(--dourado-claro);
+  stroke-width: 0.9;
+}
+
+@keyframes tracoLoop {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  38% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  68% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  86% {
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+}
+
+/* ---------- cabeçalho ---------- */
+
+.cabecalho {
+  transition: background 0.42s var(--suave), box-shadow 0.42s var(--suave),
+    height 0.42s var(--suave);
+}
+.cabecalho.fixo {
+  background: rgba(36, 21, 15, 0.86);
+  backdrop-filter: saturate(140%) blur(14px);
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- menu mobile ---------- */
+
+.menu-mobile a,
+.menu-mobile .btn-menu {
+  opacity: 0;
+  transform: translateY(14px);
+  transition-property: opacity, transform;
+  transition-duration: 0.5s;
+  transition-timing-function: var(--suave);
+  transition-delay: 0ms;
+}
+body.menu-aberto .menu-mobile a,
+body.menu-aberto .menu-mobile .btn-menu {
+  opacity: 1;
+  transform: none;
+  transition-delay: var(--d, 0ms);
+}
+
+/* ---------- micro-interações ---------- */
+
+.link-sublinhado {
+  position: relative;
+}
+.link-sublinhado::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--dourado);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.42s var(--suave);
+}
+.link-sublinhado:hover::after,
+.link-sublinhado[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+.botao-flutuante {
+  opacity: 0;
+  transform: translateY(14px) scale(0.92);
+  pointer-events: none;
+  transition: opacity 0.4s var(--suave), transform 0.4s var(--suave);
+}
+.botao-flutuante.visivel {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.botao-flutuante::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid rgba(215, 166, 62, 0.55);
+  animation: none;
+  opacity: 0;
+}
+.botao-flutuante.visivel::after {
+  animation: pulsoBotao 4s var(--suave) infinite;
+  opacity: 1;
+}
+@keyframes pulsoBotao {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  55% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+.moldura-vazia {
+  border: 1px dashed rgba(215, 166, 62, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* scrollbar discreta */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--marrom-escuro);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--marrom-chocolate);
+  border-radius: 10px;
+}
