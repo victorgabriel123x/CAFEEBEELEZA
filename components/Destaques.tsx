@@ -14,7 +14,7 @@ export default function Destaques() {
             O que sai mais bonito na mesa
           </Reveal>
           <Reveal as="p" delayMs={140} className="mt-5 text-[15.5px] leading-relaxed text-bege-claro/85">
-            Uma seleção do que costuma render a melhor foto — sem cardápio fechado
+            Uma seleção do que costuma render a melhor foto sem cardápio fechado
             aqui, é só um gostinho do que você encontra por lá.
           </Reveal>
         </div>
