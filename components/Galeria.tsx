@@ -22,7 +22,7 @@ export default function Galeria() {
             O ambiente
           </Reveal>
           <Reveal as="p" delayMs={140} className="mt-5 text-[15.5px] leading-relaxed text-bege-claro/85">
-            Fotos do espaço chegando em breve — fachada, salão e o cantinho
+            Fotos do espaço chegando em breve fachada, salão e o cantinho
             preferido pra fotos.
           </Reveal>
         </div>
