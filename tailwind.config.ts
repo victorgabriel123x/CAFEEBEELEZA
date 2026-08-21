@@ -8,13 +8,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "marrom-escuro": "#24150F",
-        "marrom-chocolate": "#332119",
+        // paleta rosa-e-dourado (vinho profundo + dourado da marca + rosa)
+        "marrom-escuro": "#3A1620",
+        "marrom-chocolate": "#4E1E2C",
         dourado: "#D7A63E",
-        "dourado-claro": "#EFC76C",
-        "bege-claro": "#E8D7BE",
-        "branco-quente": "#F7F1E8",
-        "cinza-bege": "#CBBEAE",
+        "dourado-claro": "#E6A6A0",
+        "bege-claro": "#F1DBD8",
+        "branco-quente": "#FBEEEB",
+        "cinza-bege": "#DDB6B7",
       },
       fontFamily: {
         display: ["var(--font-display)"],

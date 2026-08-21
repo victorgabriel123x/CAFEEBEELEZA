@@ -98,7 +98,7 @@ fotos continuam intactos em `Café e Beleza/FOTOS/` — nada foi sobrescrito.
 As 5 fotos usadas em "Destaques" tinham fundos bem diferentes entre si (floral
 rosa, escuro, desfocado). Pra ficarem visualmente como uma coleção só, foi
 aplicado um tratamento de cor (tom quente, unificado com a paleta
-marrom/dourado do site) e uma leve vinheta — sem alterar o prato, o bolo ou
+vinho/rosa/dourado do site) e uma leve vinheta — sem alterar o prato, o bolo ou
 qualquer conteúdo da foto em si. Isso é só ajuste de apresentação, igual a um
 filtro; nada foi retocado ou editado no que a foto mostra.
 

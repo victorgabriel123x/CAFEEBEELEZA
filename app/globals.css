@@ -7,14 +7,18 @@
   --font-body: "Work Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     sans-serif;
   --suave: cubic-bezier(0.2, 0.72, 0.28, 1);
-  --marrom-escuro: #24150f;
-  --marrom-chocolate: #332119;
+  /* paleta rosa-e-dourado: vinho profundo como base escura (a cafeteria
+     tem decoração e pinturas em rosa), com dourado da marca preservado
+     no acento sólido e um rosa-dourado suave entrando em destaques,
+     hover e no vapor do desenho animado. */
+  --marrom-escuro: #3a1620;
+  --marrom-chocolate: #4e1e2c;
   --dourado: #d7a63e;
-  --dourado-claro: #efc76c;
-  --bege-claro: #e8d7be;
-  --branco-quente: #f7f1e8;
-  --cinza-bege: #cbbeae;
-  --borda-dourada: rgba(215, 166, 62, 0.18);
+  --dourado-claro: #e6a6a0;
+  --bege-claro: #f1dbd8;
+  --branco-quente: #fbeeeb;
+  --cinza-bege: #ddb6b7;
+  --borda-dourada: rgba(230, 166, 160, 0.22);
   --altura-cabecalho: 84px;
 }
 

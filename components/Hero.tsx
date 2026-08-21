@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import CoffeeLineArt from "./CoffeeLineArt";
 import { hero, contato } from "@/lib/site-data";
 
@@ -94,18 +95,31 @@ export default function Hero() {
         </div>
 
         <div
-          className="entra relative mx-auto aspect-square w-full max-w-sm"
+          className="entra relative mx-auto w-full max-w-sm"
           style={{ ["--d" as any]: "180ms" }}
         >
           <div
             aria-hidden="true"
-            className="absolute inset-6 rounded-full"
-            style={{
-              background:
-                "radial-gradient(closest-side, rgba(215,166,62,.14), transparent 72%)",
-            }}
+            className="absolute -inset-x-4 -inset-y-6 -z-10 rounded-macia border border-dourado/20 md:-inset-x-6 md:-inset-y-8"
           />
-          <CoffeeLineArt className="relative h-full w-full" />
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-macia border border-dourado/20 shadow-[0_30px_60px_-30px_rgba(0,0,0,.7)]">
+            <Image
+              src="/images/hero.jpg"
+              alt="Fatia de bolo red velvet com morangos, servida no Café e Beleza"
+              fill
+              priority
+              sizes="(min-width: 768px) 34vw, 80vw"
+              className="object-cover"
+            />
+          </div>
+
+          {/* selo animado: o cafe desenhado em linha, em loop, sobre o fundo escuro */}
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-8 -left-8 flex h-32 w-32 items-center justify-center rounded-full border border-dourado/25 bg-marrom-escuro shadow-[0_18px_36px_-16px_rgba(0,0,0,.75)] md:h-36 md:w-36"
+          >
+            <CoffeeLineArt className="h-[72%] w-[72%]" />
+          </div>
         </div>
       </div>
 
