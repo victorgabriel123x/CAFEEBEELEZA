@@ -30,6 +30,29 @@ Next.js): conecta a pasta do projeto (ou um repositório Git) e ela cuida do
 resto, gratuitamente para esse tamanho de site. Outras opções: Netlify, ou
 qualquer serviço que rode Node.js.
 
+## Prévia ao colar o link (WhatsApp, Instagram etc.)
+
+Já vem pronta: existe uma imagem de compartilhamento em
+`public/logo/og.jpg` (1200×630, com o nome, "Bela Vista · Tucuruí, PA" e a
+frase de efeito) e o site já anuncia ela pro WhatsApp/Instagram/Facebook via
+`openGraph` em `app/layout.tsx`. Não precisa fazer nada extra.
+
+O único detalhe: o endereço usado nessa prévia (`og:image`, `og:url`) é
+calculado sozinho a partir do domínio da Vercel (variável `VERCEL_URL`, que a
+Vercel já define automaticamente a cada deploy) — então funciona assim que
+você subir, sem precisar editar nada. Se um dia colocar um domínio próprio
+(tipo `cafeebeleza.com.br`), só defina a variável de ambiente
+`NEXT_PUBLIC_SITE_URL` nas configurações do projeto na Vercel, com esse
+endereço.
+
+Depois de publicar, para ver a prévia atualizar no WhatsApp (ele guarda em
+cache), use o [debugger do Facebook](https://developers.facebook.com/tools/debug/)
+colando o link e clicando em "Buscar novamente" — é o mesmo cache que o
+WhatsApp usa.
+
+Quer trocar a imagem de prévia? Gere uma nova de 1200×630 e salve por cima de
+`public/logo/og.jpg`.
+
 ## Como trocar textos, telefone, endereço e horário
 
 Tudo fica em **`lib/site-data.ts`**. É o único arquivo que precisa mexer pra

@@ -1,9 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { jsonLd, marca, local } from "@/lib/site-data";
 
+/**
+ * URL base pra montar links absolutos (og:image, canonical etc).
+ * Em produção na Vercel, a variável VERCEL_URL já vem pronta sozinha —
+ * não precisa editar nada aqui. Só troque NEXT_PUBLIC_SITE_URL se o site
+ * for publicado num domínio próprio (ex.: cafeebeleza.com.br) e você
+ * quiser fixar esse endereço nas configurações de ambiente da Vercel.
+ */
+const urlBase =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://exemplo.com.br"),
+  metadataBase: new URL(urlBase),
   title: "Café e Beleza — Café instagramável em Tucuruí, PA",
   description:
     "Café e Beleza: café instagramável na Bela Vista, Tucuruí/PA. Doces, pratos e um cantinho pensado pra fotografar. Seg a sáb, 9h às 19h.",
@@ -17,9 +28,15 @@ export const metadata: Metadata = {
     title: "Café e Beleza — café instagramável em Tucuruí, PA",
     description:
       "Doces, pratos e um cantinho pensado pra fotografar. Seg a sáb, 9h às 19h, na Bela Vista, Tucuruí/PA.",
-    images: ["/logo/logo-completo.png"],
+    images: [{ url: "/logo/og.jpg", width: 1200, height: 630, alt: marca.nome }],
     locale: "pt_BR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Café e Beleza — café instagramável em Tucuruí, PA",
+    description: "Doces, pratos e um cantinho pensado pra fotografar, na Bela Vista, Tucuruí/PA.",
+    images: ["/logo/og.jpg"],
   },
   icons: {
     icon: [
@@ -28,6 +45,10 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/logo/favicon-180.png", sizes: "180x180", type: "image/png" }],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#3A1620",
 };
 
 export default function RootLayout({
@@ -64,7 +85,7 @@ export default function RootLayout({
           Pular para o conteúdo
         </a>
         <noscript>
-          <div style={{ padding: "1rem", background: "#332119", color: "#F7F1E8" }}>
+          <div style={{ padding: "1rem", background: "#3A1620", color: "#FBEEEB" }}>
             {marca.nome} — {local.enderecoCompleto}. Segunda a sábado, 9h às 19h.
           </div>
         </noscript>
